@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Booking</title>
+    <style>
+        /* General Styling */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1500px;
+            width: 100%;
+            padding: 0px 0px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: #8bbbdf;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 1px;
+            
+
+        }
+
+        .header h1 {
+            font-size: 20px;
+            color: #333;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .back-arrow {
+            font-size: 20px;
+            color: #00796b;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            margin-top: 0px;
+            padding: 10px 0;
+            gap: 80px;
+            justify-content: center;
+            background-color: #ffffff;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tabs div {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #00796b;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .tabs div:hover {
+            background-color: #e0f2f1;
+        }
+
+        .tabs div.active {
+            background-color: #00796b;
+            color: white;
+        }
+
+        .appointment-section {
+            margin-top: 0px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .appointment-section h2 {
+            margin: 0 0 15px;
+            font-size: 18px;
+            color: #333;
+            text-align: left;
+        }
+
+        .slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+        }
+
+        .slot {
+            padding: 20px;
+            border: 1px solid #00796b;
+            border-radius: 8px;
+            color: #00796b;
+            cursor: pointer;
+            font-size: 14px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .slot:hover {
+            background-color: #00796b;
+            color: white;
+        }
+
+        .slot.confirmed {
+    background-color: #d3d3d3; /* Gray background for confirmed slots */
+    color: #6c757d; /* Muted text color */
+    cursor: not-allowed;
+}
+.slot.confirmed:hover {
+    background-color: #d3d3d3; /* Prevent hover effect */
+}
+
+       
+
+        .back-button {
+            padding: 10px 20px;
+            background-color: #00796b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+            margin-top:0px;
+            margin-left: 640px;
+        }
+
+        .back-button:hover {
+            background-color: #004d40;
+        }
+
+        /* Pop-up styling */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .popup button {
+            background-color: #00796b;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .popup button:hover {
+            background-color: #004d40;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <a href="Kohli profile.html" class="back-arrow">&#8592;</a>
+            <h1>Book an Appointment</h1>
+            <div>
+                <strong>Dr.Kohli</strong><br>
+                <span>Neurologist</span><br>
+                <span>ID:</span>
+            </div>
+        </div>
+
+        <!-- Date Tabs -->
+        <div class="tabs">
+           
+        </div>
+
+        <!-- Appointment Section -->
+        <div class="appointmentsection">
+            <h2>🌞 Morning (Clinic Consultation)</h2>
+            <br>
+            <div class="slots">
+                <div class="slot" onclick="bookAppointment('10:00 AM')">10:00 AM</div>
+                <div class="slot" onclick="bookAppointment('10:15 AM')">10:15 AM</div>
+                <div class="slot" onclick="bookAppointment('10:30 AM')">10:30 AM</div>
+                <div class="slot" onclick="bookAppointment('10:45 AM')">10:45 AM</div>
+                <div class="slot" onclick="bookAppointment('11:00 AM')">11:00 AM</div>
+                <div class="slot" onclick="bookAppointment('11:15 AM')">11:15 AM</div>
+                <div class="slot" onclick="bookAppointment('11:30 AM')">11:30 AM</div>
+                <div class="slot" onclick="bookAppointment('11:45 AM')">11:45 AM</div>
+                <div class="slot" onclick="bookAppointment('12:00 PM')">12:00 PM</div>
+                <div class="slot" onclick="bookAppointment('12:15 PM')">12:15 PM</div>
+            </div>
+            <br>
+            <br>
+
+            <h2>🌇 Evening (Online chat Consultation)</h2>
+            <br>
+            <div class="slots">
+                <div class="slot" onclick="bookAppointment('05:00 PM')">05:00 PM</div>
+                <div class="slot" onclick="bookAppointment('05:15 PM')">05:15 PM</div>
+                <div class="slot" onclick="bookAppointment('05:30 PM')">05:30 PM</div>
+                <div class="slot" onclick="bookAppointment('05:45 PM')">05:45 PM</div>
+                <div class="slot" onclick="bookAppointment('06:00 PM')">06:00 PM</div>
+                <div class="slot" onclick="bookAppointment('06:15 PM')">06:15 PM</div>
+                <div class="slot" onclick="bookAppointment('06:30 PM')">06:30 PM</div>
+                <div class="slot" onclick="bookAppointment('06:45 PM')">06:45 PM</div>
+            </div>
+            <br>
+            <br>
+
+            <h2>🌙 Night (Online video Consultation)</h2>
+            <br>
+            <div class="slots">
+                <div class="slot" onclick="bookAppointment('08:00 PM')">08:00 PM</div>
+                <div class="slot" onclick="bookAppointment('08:15 PM')">08:15 PM</div>
+                <div class="slot" onclick="bookAppointment('08:30 PM')">08:30 PM</div>
+                <div class="slot" onclick="bookAppointment('08:45 PM')">08:45 PM</div>
+                <div class="slot" onclick="bookAppointment('09:00 PM')">09:00 PM</div>
+                <div class="slot" onclick="bookAppointment('09:15 PM')">09:15 PM</div>
+                <div class="slot" onclick="bookAppointment('09:30 PM')">09:30 PM</div>
+                <div class="slot" onclick="bookAppointment('09:45 PM')">09:45 PM</div>
+            </div>
+            <br>
+            <br>
+            <a href="pt dashboard.html" class="back-button">Back to Dashboard</a>
+        </div>
+    </div>
+       
+    
+
+    <!-- Appointment Pop-up -->
+    <div class="popup" id="appointment-popup">
+        <div class="popup-content">
+            <h3>Book Appointment</h3>
+            <p>Do you want to book an appointment for <span id="selected-time"></span>?</p>
+            <button onclick="confirmAppointment()">Confirm</button>
+            <button onclick="closePopup()">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+   document.addEventListener("DOMContentLoaded", function () {
+    const tabsContainer = document.querySelector(".tabs");
+    tabsContainer.innerHTML = ""; // Clear existing static tabs
+    const today = new Date();
+    const storageKey = "confirmedSlotsPerDay_Kohli"; // Key specific to Dr. Kohli
+
+
+    // Retrieve confirmed slots from localStorage or initialize
+    const confirmedSlotsPerDay = JSON.parse(localStorage.getItem(storageKey)) || {};
+
+    // Generate the next 7 days including today
+    for (let i = 0; i < 7; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() + i);
+
+        const day = date.getDate();
+        const month = date.toLocaleString("default", { month: "short" });
+        const formattedDate = `${day}-${month}`;
+
+        if (!confirmedSlotsPerDay[formattedDate]) {
+            confirmedSlotsPerDay[formattedDate] = []; // Initialize empty array for each date if not already present
+        }
+
+        // Create the tab element
+        const tab = document.createElement("div");
+        tab.textContent = formattedDate;
+        tab.className = i === 0 ? "active" : ""; // Set the first date as active
+        tab.onclick = function () {
+            changeDate(tab, formattedDate);
+        };
+
+        // Append the tab to the container
+        tabsContainer.appendChild(tab);
+    }
+
+    const slots = document.querySelectorAll(".slot");
+    let activeDate = `${today.getDate()}-${today.toLocaleString("default", { month: "short" })}`; // Default active date
+
+    // Initialize slot styles for the default active date
+    applyConfirmedStyles(activeDate);
+
+    // Attach click event to each slot
+    slots.forEach(slot => {
+        slot.addEventListener("click", function () {
+            // Check if the slot is already confirmed for the active date
+            if (confirmedSlotsPerDay[activeDate].includes(slot.textContent)) {
+                alert("This time slot is already confirmed and cannot be selected.");
+                return;
+            }
+
+            // Show confirmation popup
+            const isConfirmed = confirm(`Confirm the time slot: ${slot.textContent}?`);
+           if (isConfirmed) {
+               confirmedSlotsPerDay[activeDate].push(slot.textContent); // Add slot to confirmed array for the active date
+                localStorage.setItem(storageKey, JSON.stringify(confirmedSlotsPerDay)); // Save to localStorage
+                slot.classList.add("confirmed");
+            }
+        });
+    });
+
+    function changeDate(selectedTab, dateKey) {
+        // Remove active class from all tabs
+        document.querySelectorAll(".tabs div").forEach(tab => tab.classList.remove("active"));
+        // Add active class to the selected tab
+        selectedTab.classList.add("active");
+        activeDate = dateKey; // Update active date
+
+        // Update slot styles based on the confirmed slots for the active date
+        applyConfirmedStyles(activeDate);
+    }
+
+    function applyConfirmedStyles(dateKey) {
+        slots.forEach(slot => {
+            if (confirmedSlotsPerDay[dateKey] && confirmedSlotsPerDay[dateKey].includes(slot.textContent)) {
+                slot.classList.add("confirmed");
+            } else {
+                slot.classList.remove("confirmed");
+            }
+        });
+    }
+});
+
+function bookAppointment(time) {
+            document.getElementById("selected-time").textContent = time;
+            document.getElementById("appointment-popup").style.display = "flex";
+        }
+    
+        function confirmAppointment() {
+            alert("Your appointment has been booked!");
+            document.getElementById("appointment-popup").style.display = "none";
+        }
+    
+        function closePopup() {
+            document.getElementById("appointment-popup").style.display = "none";
+        }
+
+        const doctorName = "Dr. Kohli";
+
+        function confirmAppointment() {
+    const selectedTime = document.getElementById("selected-time").textContent;
+    const selectedDateTab = document.querySelector(".tabs .active").textContent;
+
+    // Retrieve appointments from localStorage or initialize
+    const appointments = JSON.parse(localStorage.getItem("appointments")) || [];
+
+    // Add the new appointment
+    appointments.push({
+        doctor: doctorName, // Use "Dr. Rohit" or "Dr. Kohli"
+        date: selectedDateTab,
+        time: selectedTime,
+    });
+
+    // Save back to localStorage
+    localStorage.setItem("appointments", JSON.stringify(appointments));
+
+    alert("Your appointment has been booked!");
+    document.getElementById("appointment-popup").style.display = "none";
+}
+
+
+    </script>
+    
+</body>
+
+</html>

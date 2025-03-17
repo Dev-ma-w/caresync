@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-container {
+            width: 100%;
+            max-width: 1500px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 0;
+            box-shadow: none;
+            flex: 1; /* Ensures this section takes available space */
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .header {
+            background: #e0f7fa;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            background: #d3d3d3;
+        }
+
+        .header .info {
+            flex: 1;
+        }
+
+        .header .info h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #00796b;
+        }
+
+        .header .info p {
+            margin: 5px 0 0;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .header .experience {
+            background: #00c853;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .details {
+            margin: 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .details h2 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .schedule table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .schedule th, .schedule td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #e0e0e0;
+        }
+
+        .schedule th {
+            background-color: #00796b;
+            color: white;
+        }
+
+        .schedule td {
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .actions a {
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            color: white;
+            font-size: 16px;
+            background: #00796b;
+            transition: background 0.3s ease;
+        }
+
+        .actions a:hover {
+            background: #004d40;
+        }
+
+        .footer {
+            background: white;
+            color: white;
+            text-align: center;
+            padding: 15px 20px;
+            flex-shrink: 0; /* Ensures footer stays at the bottom */
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background: #00796b;
+            transition: background 0.3s ease;
+            margin: 0 10px;
+        }
+
+        .footer a:hover {
+            background: #004d40;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="header">
+            <img src="" alt="Profile Picture">
+            <div class="info">
+                <h1><b>Dr.Rohit</b></h1>
+                <p>Cardiologist</p>
+                <p>ID:DOC9887</p>
+            </div>
+            <span class="experience">9 years exp</span>
+        </div>
+
+        <div class="container">
+            <div class="details">
+                <div class="schedule">
+                    <h2>Clinic Hours</h2>
+                    <table>
+                        <tr>
+                            <th>Day</th>
+                            <th>Morning</th>
+                            <th>Evening</th>
+                        </tr>
+                        <tr>
+                            <td>Monday</td>
+                            <td>09:00 AM - 02:00 PM</td>
+                            <td>06:00 PM - 09:00 PM</td>
+                        </tr>
+                        <tr>
+                            <td>Tuesday</td>
+                            <td>09:00 AM - 02:00 PM</td>
+                            <td>06:00 PM - 09:00 PM</td>
+                        </tr>
+                        <tr>
+                            <td>Wednesday</td>
+                            <td>09:00 AM - 02:00 PM</td>
+                            <td>06:00 PM - 09:00 PM</td>
+                        </tr>
+                        <tr>
+                            <td>Thursday</td>
+                            <td>09:00 AM - 02:00 PM</td>
+                            <td>06:00 PM - 09:00 PM</td>
+                        </tr>
+                        <tr>
+                            <td>Friday</td>
+                            <td>09:00 AM - 02:00 PM</td>
+                            <td>06:00 PM - 09:00 PM</td>
+                        </tr>
+                        <tr>
+                            <td>Saturday</td>
+                            <td>09:00 AM - 02:00 PM</td>
+                            <td>06:00 PM - 09:00 PM</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="details">
+            <h2>Education</h2>
+            <p>MBBS, DCH, DNB (Cardiology)</p>
+
+            <h2>Memberships</h2>
+            <p>IAP Member</p>
+
+            <h2>Services</h2>
+            <p>Pediatric Emergency Care</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <a href="rohit book appointment.html">Book an Appointment</a>
+        <a href="pt dashboard.html">BACK</a>
+    </div>
+</body>
+</html>

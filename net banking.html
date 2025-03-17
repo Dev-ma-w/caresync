@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital UPI Payments</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6;
+        }
+        header {
+            background-color: #2874f0;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .content {
+            padding: 20px;
+        }
+        .payment-method {
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: box-shadow 0.3s;
+        }
+        .payment-method:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            background-color: #2874f0;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .summary {
+            margin-top: 20px;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+            text-align: right;
+        }
+        .pay-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #2874f0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .pay-button:hover {
+            background-color: #0d6efd;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Hospital UPI Payment</h1>
+</header>
+
+<div class="container">
+    <div class="content">
+        <h2>Pay Using UPI</h2>
+        <form id="upiPaymentForm">
+            <div class="payment-method">
+                <label for="upiId">Enter UPI ID:</label><br>
+                <input type="text" id="upiId" name="upiId" placeholder="example@upi" required style="width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            </div>
+            <div>
+                <label for="consultationType">Select Consultation Type:</label><br>
+                <select id="consultationType" name="consultationType" style="width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                    <option value="video">Video Call Consultation - Rs 150</option>
+                    <option value="chat">Chat Consultation - Rs 250</option>
+                </select>
+            </div>
+            <div class="summary">
+                <p>Total Amount: <strong id="totalAmount">Rs 150</strong></p>
+            </div>
+            <button type="submit" class="pay-button">Proceed to Pay</button>
+        </form>
+    </div>
+</div>
+
+<footer>
+    <p>Hospital Payment &copy; 2025</p>
+</footer>
+
+<script>
+    const consultationType = document.getElementById('consultationType');
+    const totalAmount = document.getElementById('totalAmount');
+
+    consultationType.addEventListener('change', function() {
+        const selectedOption = consultationType.value;
+        if (selectedOption === 'video') {
+            totalAmount.textContent = 'Rs 150';
+        } else if (selectedOption === 'chat') {
+            totalAmount.textContent = 'Rs 250';
+        }
+    });
+
+    document.getElementById('upiPaymentForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const upiId = document.getElementById('upiId').value;
+        const selectedType = consultationType.options[consultationType.selectedIndex].text;
+        const amount = totalAmount.textContent;
+
+        if (upiId) {
+            alert(`UPI Payment initiated for ${selectedType}.
+UPI ID: ${upiId}
+Amount: ${amount}`);
+        } else {
+            alert('Please enter a valid UPI ID.');
+        }
+    });
+</script>
+
+</body>
+</html>

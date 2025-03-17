@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Patients</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+               body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background-color: #f4f5f9;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #1f2937;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sidebar .logo {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            margin-left:10px
+        }
+
+        .sidebar img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 0px;
+            border-radius: 10px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            
+        }
+
+        .sidebar ul li {
+            margin: 15px 0;
+        }
+
+        .sidebar ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar ul li a:hover, .sidebar ul li a.active {
+            background-color: #3e4e66;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            background-color: #fff;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header input {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .header .add-patient-btn {
+            background-color: #2f2b5b;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .filters {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .filters select, .filters input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #f9f9f9;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #eaeaea;
+        }
+
+        .action-buttons button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .action-buttons .view {
+            background-color: #4CAF50;
+            color: #fff;
+        }
+        .action-buttons .Download{
+            background-color: #0a6cf5;
+            color:#fff
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            width: 400px;
+        }
+
+        .modal-content input {
+            width: 90%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .modal-content select {
+            width: 98%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .modal-content button {
+            width: 100%;
+            background-color: #2f2b5b;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .close-btn {
+            background-color: #f44336;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">CareSync</div>
+            <img src="https://cdn.dribbble.com/userupload/16410591/file/original-c51d0c42ed6debc77969e5d0bb9ae570.png?resize=1600x1200" alt="CareSync Logo">
+            <ul>
+                <li><a href="dr dashboard.html">Overview</a></li>
+                <li><a href="dr appointment.html">Appointments</a></li>
+                <li><a href="dr my patients.html" class="active">My Patients</a></li>
+                <li><a href="dr schedule timings.html">Schedule Timings</a></li>
+                <li><a href="dr payments.html">Payments</a></li>
+                <li><a href="dr messages.html">Messages</a></li>
+                <li><a href="dr settings.html">Settings</a></li>
+                <li><a href="dr logout.html">Logout</a></li>
+            </ul>
+        </aside>
+
+        <div class="main-content">
+            <div class="header">
+                <div class="header">
+                    <p id="doctor-id">ID: Loading...</p>
+
+                </div>
+                <h2>My Patients</h2>
+                <input type="text" id="search" placeholder="Search by name, status, or type">
+                <button class="add-patient-btn" onclick="openModal()">+ Add Patient</button>
+            </div>
+
+            <div class="filters">
+                <div>
+                    <label for="entries">Show</label>
+                    <select id="entries">
+                        <option value="2">2 entries</option>
+                        <option value="3">3 entries</option>
+                        <option value="7">7 entries</option>
+                        <option value="10">10 entries</option>
+                        <option value="15">15 entries</option>
+                        <option value="100">100 entries</option>
+                    </select>
+                </div>
+                <div>
+                    <select id="type-filter">
+                        <option value="">All categories</option>
+                        <option value="clinic">Clinic Consultation</option>
+                        <option value="video">Video Consultation</option>
+                        <option value="chat">Chat Consultation</option>
+                    </select>
+                    <input type="date" id="date-filter">
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Patient ID</th>
+                        <th>Date</th>
+                        <th>Gender</th>
+                        <th>Diseases</th>
+                        <th>Status</th>
+                        <th>Payment</th>
+                        <th>Consultation Type</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="patient-list"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Add Patient Modal -->
+    <div class="modal" id="add-patient-modal">
+        <div class="modal-content">
+            <h3>Add Patient</h3>
+            <input type="text" id="patient-name" placeholder="Patient Name">
+            <input type="text" id="patient-id" placeholder="Patient ID">
+            <input type="date" id="patient-date">
+            <select id="patient-gender">
+                <option value="">Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+            <input type="text" id="patient-disease" placeholder="Disease">
+            <input type="text" id="patient-status" placeholder="Status">
+            <input type="text" id="patient-payment" placeholder="Payment Method">
+            <select id="patient-consultation-type">
+                <option value="">Consultation Type</option>
+                <option value="clinic">Clinic Consultation</option>
+                <option value="video">Video Consultation</option>
+                <option value="chat">Chat Consultation</option>
+            </select>
+            <button onclick="addPatient()">Add</button>
+            <button class="close-btn" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+    <script>
+        const patients = [
+            { name: "Ajay", id: "121215", date: "2023-12-01", gender: "Male", disease: "Diabetes", status: "In-Treatment", payment: "Cash", type: "clinic" },
+            { name: "Priya", id: "121216", date: "2023-12-02", gender: "Female", disease: "Hypertension", status: "In-Treatment", payment: "Paypal", type: "video" },
+            { name: "Rohan", id: "121217", date: "2023-12-03", gender: "Male", disease: "Asthma", status: "Discharged", payment: "Card", type: "chat" },
+        ];
+
+        const tableBody = document.getElementById('patient-list');
+        const typeFilter = document.getElementById('type-filter');
+        const searchInput = document.getElementById('search');
+        const dateFilter = document.getElementById('date-filter');
+
+        function renderPatients() {
+            const searchQuery = searchInput.value.toLowerCase();
+            const typeValue = typeFilter.value;
+            const dateValue = dateFilter.value;
+            const entriesValue = parseInt(document.getElementById('entries').value);
+
+            const filteredPatients = patients.filter(patient => {
+                const matchesSearch = patient.name.toLowerCase().includes(searchQuery) ||
+                    patient.status.toLowerCase().includes(searchQuery) ||
+                    patient.type.toLowerCase().includes(searchQuery);
+                const matchesType = typeValue === "" || patient.type === typeValue;
+                const matchesDate = dateValue === "" || patient.date === dateValue;
+                return matchesSearch && matchesType && matchesDate;
+            });
+
+            tableBody.innerHTML = '';
+            const displayedPatients = filteredPatients.slice(0, entriesValue);
+            displayedPatients.forEach(patient => {
+                const row = `
+                    <tr>
+                        <td>${patient.name}</td>
+                        <td>${patient.id}</td>
+                        <td>${patient.date}</td>
+                        <td>${patient.gender}</td>
+                        <td>${patient.disease}</td>
+                        <td>${patient.status}</td>
+                        <td>${patient.payment}</td>
+                        <td>${patient.type}</td>
+                        <td class="action-buttons">
+                            <button class="view" onclick="viewPatient('${patient.id}')">View</button>
+                             <button class="Download" onclick="DownloadPatient('${patient.id}')">Download</button>
+                        </td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+        }
+
+function DownloadPatient(patientId) {
+  fetch(/api/patients/`${patientId}/download`)
+    .then(response => response.blob())
+    .then(blob => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = patient_`${patientId}_records.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    })
+    .catch(error => {
+      console.error('Error downloading patient records:', error);
+    });
+}
+
+
+        function deletePatient(patientId) {
+            const index = patients.findIndex(patient => patient.id === patientId);
+            if (index !== -1) {
+                patients.splice(index, 1);
+                renderPatients();
+            }
+        }
+
+        function openModal() {
+            clearForm();
+            document.getElementById('add-patient-modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('add-patient-modal').style.display = 'none';
+        }
+
+        function addPatient() {
+            const name = document.getElementById('patient-name').value;
+            const id = document.getElementById('patient-id').value;
+            const date = document.getElementById('patient-date').value;
+            const gender = document.getElementById('patient-gender').value;
+            const disease = document.getElementById('patient-disease').value;
+            const status = document.getElementById('patient-status').value;
+            const payment = document.getElementById('patient-payment').value;
+            const consultationType = document.getElementById('patient-consultation-type').value;
+
+            if (name && id && date && gender && disease && status && payment && consultationType) {
+                patients.push({ 
+                    name, 
+                    id, 
+                    date, 
+                    gender, 
+                    disease, 
+                    status, 
+                    payment, 
+                    type: consultationType 
+                });
+                renderPatients();
+                closeModal();
+                clearForm();
+            } else {
+                alert("Please fill out all fields.");
+            }
+        }
+
+        function clearForm() {
+            document.getElementById('patient-name').value = '';
+            document.getElementById('patient-id').value = '';
+            document.getElementById('patient-date').value = '';
+            document.getElementById('patient-gender').value = '';
+            document.getElementById('patient-disease').value = '';
+            document.getElementById('patient-status').value = '';
+            document.getElementById('patient-payment').value = '';
+            document.getElementById('patient-consultation-type').value = '';
+        }
+
+        document.getElementById('entries').addEventListener('change', renderPatients);
+        typeFilter.addEventListener('change', renderPatients);
+        searchInput.addEventListener('input', renderPatients);
+        dateFilter.addEventListener('change', renderPatients);
+
+      
+ // Function to display Doctor's ID from sessionStorage
+  function displayDoctorId() {
+            const storedData = sessionStorage.getItem("loggedInDoctorId");
+
+            // Check if data exists
+            if (storedData) {
+                document.getElementById('doctor-id').textContent = `Doctor ID: ${storedData}`;
+            } else {
+                console.log("No doctor data found in sessionStorage.");
+            }
+        }
+
+        // Call the display function when the page loads
+        document.addEventListener('DOMContentLoaded', displayDoctorId);
+    </script>
+</body>
+</html>

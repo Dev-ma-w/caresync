@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doctor Profile</title>
+  <style>
+    /* Existing styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #eef2f6;
+      color: #333;
+      display: flex;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .dashboard-container {
+      display: flex;
+      width: 100%;
+    }
+
+    /* Sidebar Styling */
+    .sidebar {
+      width: 250px;
+      background-color: #1f2937;
+      color: #ffffff;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .sidebar .logo {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .sidebar img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 30px;
+      border-radius: 10px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      width: 100%;
+    }
+
+    .sidebar ul li {
+      width: 100%;
+      margin: 10px 0;
+    }
+
+    .sidebar ul li a {
+      color: #ffffff;
+      text-decoration: none;
+      padding: 12px 15px;
+      display: block;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar ul li a:hover, .sidebar ul li a.active {
+      background-color: #374151;
+    }
+
+
+    .profile-container {
+      background: #ffffff;
+      width: 100%;
+      margin-left: 250px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      
+      
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .header img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin-right: 20px;
+      border: 3px solid #007bff;
+      margin-left:450px
+    }
+
+    .header .info h2 {
+      font-size: 24px;
+      color: #007bff;
+    }
+
+    /* Updated Details Section Styling */
+    .details {
+      display: flex;
+      flex-direction: column; /* Arrange items line by line */
+      align-items: center; /* Center items horizontally */
+      gap: 20px; /* Space between the details boxes */
+      margin: 0 auto; /* Center the entire container horizontally */
+      max-width: 600px; /* Optional: Restrict maximum width */
+    }
+
+    .details div {
+      background: #f9f9f9;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 100%; /* Ensures all items have the same width */
+    }
+
+    .details div p:first-child {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .edit-button {
+      display: flex;
+      justify-content: center;
+    }
+
+    .edit-button button {
+      padding: 10px 20px;
+      background: #007bff;
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s ease;
+    }
+
+    .edit-button button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <div class="logo">CareSync</div>
+          <img src="https://cdn.dribbble.com/userupload/16410591/file/original-c51d0c42ed6debc77969e5d0bb9ae570.png?resize=1600x1200" alt="Sidebar Image">
+          <ul>
+            <li><a href="dr dashboard.html">Overview</a></li>
+            <li><a href="dr appointment.html">Appointments</a></li>
+            <li><a href="dr my-patients.html">My Patients</a></li>
+            <li><a href="dr schedule-timings.html">Schedule Timings</a></li>
+            <li><a href="dr payments.html">Payments</a></li>
+            <li><a href="dr messages.html">Messages</a></li>
+            <li><a href="dr settings.html"class="active">Settings</a></li>
+            <li><a href="dr logout.html">logout</a></li>
+          </ul>
+        </aside>
+    
+    <!-- Profile Content -->
+    <div class="profile-container">
+      <!-- Header Section -->
+      <div class="header">
+        <img src="https://via.placeholder.com/120" alt="Doctor Picture">
+        <div class="info">
+          <h2>Dr. John Doe</h2>
+          <p>ID: D12345</p>
+          <p>Specialty: Cardiologist</p>
+        </div>
+      </div>
+<br><br><br>
+      <!-- Centered Details Section -->
+      <div class="details">
+        <div>
+          <p>Email:</p>
+          <p>john.doe@example.com</p>
+        </div>
+        <div>
+          <p>Address:</p>
+          <p>123 Elm Street, NY</p>
+        </div>
+        <div>
+          <p>Phone:</p>
+          <p>+123-456-7890</p>
+        </div>
+        <div>
+          <p>Date of Birth:</p>
+          <p>01/01/1980</p>
+        </div>
+        <div>
+          <p>Hospital:</p>
+          <p>NY General Hospital</p>
+        </div>
+        <div>
+          <p>Experience:</p>
+          <p>15 Years</p>
+        </div>
+      </div>
+<br>
+      <!-- Edit Button -->
+      <div class="edit-button">
+        <button onclick="editProfile()">Edit Profile</button>
+      </div>
+    </div>
+
+     <!-- Edit Profile Modal -->
+<div id="editProfileModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center;">
+    <div style="background: white; padding: 20px; border-radius: 10px; width: 400px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+      <h2>Edit Profile</h2>
+      <form id="editProfileForm">
+        <div style="margin-bottom: 10px;">
+          <label for="email" style="display: block; margin-bottom: 5px;">Email:</label>
+          <input type="email" id="email" name="email" value="john.doe@example.com" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
+        </div>
+        <div style="margin-bottom: 10px;">
+          <label for="address" style="display: block; margin-bottom: 5px;">Address:</label>
+          <input type="text" id="address" name="address" value="123 Elm Street, NY" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
+        </div>
+        <div style="margin-bottom: 10px;">
+          <label for="phone" style="display: block; margin-bottom: 5px;">Phone:</label>
+          <input type="text" id="phone" name="phone" value="+123-456-7890" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
+        </div>
+        <div style="margin-bottom: 10px;">
+          <label for="experience" style="display: block; margin-bottom: 5px;">Experience (Years):</label>
+          <input type="number" id="experience" name="experience" value="15" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
+        </div>
+        <button type="button" onclick="saveProfile()" style="background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Save</button>
+        <button type="button" onclick="closeModal()" style="background: #ccc; color: black; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Cancel</button>    </form></div> </div>"
+  
+  </div>
+</body>
+<script>
+ document.addEventListener("DOMContentLoaded", () => {
+    // Retrieve the logged-in doctor's ID from sessionStorage
+    const loggedInDoctorId = sessionStorage.getItem("loggedInDoctorId");
+
+    if (!loggedInDoctorId) {
+        alert("No doctor logged in. Redirecting to login...");
+        window.location.href = "login.html";
+        return;
+    }
+
+    // Retrieve the doctor data from localStorage
+    const doctorData = JSON.parse(localStorage.getItem('userData')) || {};
+
+    // Find the logged-in doctor from the data
+    const doctorDetails = Object.values(doctorData).find(doctor => doctor.docID === loggedInDoctorId);
+
+    if (!doctorDetails) {
+        alert("Doctor data not found. Redirecting to login...");
+        window.location.href = "dr login.html";
+        return;
+    }
+
+    // Populate the profile containers with fetched data
+    document.querySelector(".header .info h2").textContent = `Dr. ${doctorDetails.fullName}`;
+    document.querySelector(".header .info p:nth-child(2)").textContent = `ID: ${doctorDetails.docID}`;
+    document.querySelector(".header .info p:nth-child(3)").textContent = `Specialty: ${doctorDetails.speciality}`;
+
+    const details = document.querySelectorAll(".details div p:nth-child(2)");
+    details[0].textContent = doctorDetails.email;
+    details[1].textContent = doctorDetails.address;
+    details[2].textContent = doctorDetails.phone;
+    details[3].textContent = doctorDetails.dob || 'N/A'; // If dob is not available, show 'N/A'
+    details[4].textContent = doctorDetails.hospitalName;
+    details[5].textContent = `${doctorDetails.experience} Years`;
+});
+
+
+      // Load saved profile data from Local Storage
+      const savedProfile = JSON.parse(localStorage.getItem("profileData"));
+  
+      
+      if (savedProfile) {
+        document.querySelector(".details div:nth-child(1) p:nth-child(2)").textContent = savedProfile.email;
+        document.querySelector(".details div:nth-child(2) p:nth-child(2)").textContent = savedProfile.address;
+        document.querySelector(".details div:nth-child(3) p:nth-child(2)").textContent = savedProfile.phone;
+        document.querySelector(".details div:nth-child(6) p:nth-child(2)").textContent = `${savedProfile.experience} Years`;
+      }
+    ;
+  
+    function editProfile() {
+      const modal = document.getElementById("editProfileModal");
+      const details = document.querySelectorAll(".details div p:nth-child(2)");
+
+document.getElementById("email").value = details[0].textContent;
+document.getElementById("address").value = details[1].textContent;
+document.getElementById("phone").value = details[2].textContent;
+document.getElementById("experience").value = parseInt(details[5].textContent);
+
+      modal.style.display = "flex"; // Show the modal
+    }
+  
+    function closeModal() {
+      const modal = document.getElementById("editProfileModal");
+      modal.style.display = "none"; // Hide the modal
+    }
+  
+    function saveProfile() {
+      const email = document.getElementById("email").value;
+      const address = document.getElementById("address").value;
+      const phone = document.getElementById("phone").value;
+      const experience = document.getElementById("experience").value;
+  
+      // Update the profile details on the page
+      document.querySelector(".details div:nth-child(1) p:nth-child(2)").textContent = email;
+      document.querySelector(".details div:nth-child(2) p:nth-child(2)").textContent = address;
+      document.querySelector(".details div:nth-child(3) p:nth-child(2)").textContent = phone;
+      document.querySelector(".details div:nth-child(6) p:nth-child(2)").textContent = `${experience} Years`;
+  
+      // Save updated data to Local Storage
+      const profileData = {
+        email,
+        address,
+        phone,
+        experience
+      };
+      localStorage.setItem("profileData", JSON.stringify(profileData));
+  
+      // Close the modal
+      closeModal();
+    }
+  </script>
+  
+</html>

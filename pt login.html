@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Login Page</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #007bff;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-container {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .login-container h1 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #333333;
+        }
+        .login-container label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #666666;
+            font-weight: 500;
+            text-align: left;
+        }
+        .login-container .heading {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: #333333;
+            text-align: left;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        .login-container button {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: #0056b3;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .login-container button:hover {
+            background-color: #003d80;
+        }
+        .login-container .footer {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        .login-container .footer a {
+            color: #0056b3;
+            text-decoration: none;
+        }
+        .login-container .footer a:hover {
+            text-decoration: underline;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: -10px;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+        .input-container {
+            position: relative;
+            width: 90%;
+        }
+        .input-container input {
+            padding-right: 35px;
+        }
+        .eye-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #333;
+        }
+    </style>
+    <script>
+       document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('loginForm');
+    const passwordInput = document.getElementById('password');
+    const patientIdInput = document.getElementById('patient-id');
+    const eyeIcon = document.getElementById('eyeIcon');
+    const passwordError = document.getElementById('passwordError');
+
+    // Toggle password visibility
+    eyeIcon.addEventListener('click', function () {
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.classList.remove('fa-eye');
+            eyeIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.classList.remove('fa-eye-slash');
+            eyeIcon.classList.add('fa-eye');
+        }
+    });
+
+    // Handle form submission
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const patientId = patientIdInput.value.trim();
+        const password = passwordInput.value.trim();
+
+        // Retrieve user data from localStorage
+        const userData = JSON.parse(localStorage.getItem('userData')) || {};
+
+        // Find the user by Patient ID
+        const user = Object.values(userData).find(user => user.patientID === patientId);
+
+        // Validate the user's credentials
+        if (user && atob(user.password) === password) {
+            // Store patient data in sessionStorage after successful login
+            sessionStorage.setItem('loggedInPatientId', patientId); // Store Patient ID in sessionStorage
+            sessionStorage.setItem('patientDetails', JSON.stringify(user)); // Store patient details in sessionStorage
+            sessionStorage.setItem('patientName', user.fullName); // Store patient name for quick access
+
+            // Redirect to dashboard page
+            window.location.href = 'pt dashboard.html';
+        } else {
+            // Error message if credentials are invalid
+            passwordError.textContent = 'Invalid Patient ID or Password. Please try again.';
+    }
+});
+});
+
+    </script>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Patient Login</h1>
+        <form id="loginForm">
+            <label class="heading" for="patient-id">Patient ID</label>
+            <div class="input-container">
+                <input type="text" id="patient-id" name="patient-id" placeholder="Enter your Patient ID" required>
+            </div>
+
+            <label class="heading" for="password">Password</label>
+            <div class="input-container">
+                <input type="password" id="password" name="password" placeholder="Enter your Password" required>
+                <i id="eyeIcon" class="fas fa-eye eye-icon"></i>
+            </div>
+            <div id="passwordError" class="error-message"></div>
+
+            <button type="submit">Login</button>
+        </form>
+        <div class="footer">
+            <p><a href="pt reset password.html">Forgot Your Password?</a></p>
+            <p>New to the system? <a href="pt register form.html">Register</a></p>
+        </div>
+    </div>
+</body>
+</html>

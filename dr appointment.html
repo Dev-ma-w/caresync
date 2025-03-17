@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f5f9;
+            display: flex;
+            justify-content: flex-start;
+            height: 100vh;
+        }
+
+        /* Sidebar Styling */
+    .sidebar {
+      width: 250px;
+      background-color: #1f2937;
+      color: #ffffff;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .sidebar .logo {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .sidebar img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 30px;
+      border-radius: 10px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      width: 100%;
+    }
+
+    .sidebar ul li {
+      width: 100%;
+      margin: 10px 0;
+    }
+
+    .sidebar ul li a {
+      color: #ffffff;
+      text-decoration: none;
+      padding: 12px 15px;
+      display: block;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar ul li a:hover, .sidebar ul li a.active {
+      background-color: #374151;
+    }
+
+        .main-content {
+    margin-left: 250px;
+    padding: 8px;
+    flex: 1;
+    background: #fff;
+    height: 100%;
+    overflow-y: auto;
+    padding-right: 10px;
+    position: relative; /* Allows child elements to be positioned relative to the main content */
+}
+
+.date-container {
+    background: #fff;
+    width: 140px; /* Adjusted width to button size */
+    height: 40px; /* Fixed height for button-like appearance */
+    padding: 5px;
+    border-radius: 5px; /* Smaller radius for button style */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Slight shadow for button effect */
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer; /* Pointer cursor for button effect */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+    position: absolute; /* Positioned relative to the main-content */
+    top: 35px; /* Distance from the top of the container */
+    right: 15px; /* Distance from the right of the container */
+}
+
+.date-container:hover {
+    background-color: #f0f0f0; /* Change background on hover */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
+}
+
+.date-container h1 {
+    font-size: 10px;
+    color: #333;
+    margin: 0; /* Remove margin for compactness */
+}
+
+.date-container p {
+    font-size: 9px; /* Reduced size for compact fit */
+    color: #555;
+    margin: 0;
+}
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            flex: 1;
+            background: #fff;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .main-content h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #2f2b5b;
+        }
+
+        .filters {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .filters select, .filters input {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .appointments {
+            margin-top: 20px;
+        }
+
+        .appointment-card {
+            display: flex;
+            align-items: center;
+            background: #f9f9f9;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .appointment-card img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+        .appointment-info {
+            flex: 1;
+        }
+
+        .appointment-info h3 {
+            font-size: 18px;
+            margin: 0;
+            color: #333;
+        }
+
+        .appointment-info p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .appointment-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn.confirm {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        .btn.cancel {
+            background-color: #f44336;
+            color: #fff;
+        }
+
+        .btn.reschedule {
+            background-color: #ff9800;
+            color: #fff;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">CareSync</div>
+        <img src="https://cdn.dribbble.com/userupload/16410591/file/original-c51d0c42ed6debc77969e5d0bb9ae570.png?resize=1600x1200" alt="Logo">
+        <ul>
+            <li><a href="dr dashboard.html">Overview</a></li>
+            <li><a href="dr appointment.html" class="active">Appointment</a></li>
+            <li><a href="dr my patients.html">My Patients</a></li>
+            <li><a href="dr schedule timings.html">Schedule Timings</a></li>
+            <li><a href="dr payments.html">Payments</a></li>
+            <li><a href="dr messages.html">Messages</a></li>
+            <li><a href="dr settings.html">Settings</a></li>
+            <li><a href="dr logout.html">Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <!-- Doctor Info Header -->
+        <div class="header">
+            <p id="doctor-id">ID: Loading...</p>
+        </div>
+    
+        <h2>Appointments</h2>
+        <p>Here you can see the list of patient appointments and schedule new ones.</p>
+    
+        <div class="date-container">
+            <p id="date-display">Date: Loading...</p>
+        </div>
+        <br>
+    
+
+        <!-- Filters (Sort and Search) -->
+        <div class="filters">
+            <!-- Sorting Dropdown -->
+            <select id="sort-options">
+                <option value="list">List</option>
+                <option value="week">Week</option>
+                <option value="day">Day</option>
+            </select>
+
+            <!-- Search Bar -->
+            <input type="text" id="search-bar" placeholder="Search by timing, or patient name">
+
+            <!-- Appointment Type Filter -->
+            <select id="appointment-type">
+                <option value="">Select Appointment Type</option>
+                <option value="clinic">Clinic Consultation</option>
+                <option value="video">Video Consultation</option>
+                <option value="chat">Chat Consultation</option>
+            </select>
+        </div>
+
+        <!-- Appointments -->
+        <div class="appointments" id="appointments-list">
+            <div class="appointment-card" data-status="confirmed" data-time="9:30 am, Jun 24, 2023" data-type="clinic">
+                <img src="https://via.placeholder.com/50" alt="Doctor">
+                <div class="appointment-info">
+                    <h3>Stephen Conley</h3>
+                    <p>Clinic Consultation</p>
+                    <p>9:30 am, Jun 24, 2023</p>
+                </div>
+                <div class="appointment-actions">
+                    <button class="btn cancel">Cancel</button>
+                    <button class="btn reschedule">Reschedule</button>
+                    <button class="btn confirm">Confirm</button>
+                </div>
+            </div>
+
+            <div class="appointment-card" data-status="cancelled" data-time="10:00 am, Jun 10, 2023" data-type="video">
+                <img src="https://via.placeholder.com/50" alt="Doctor">
+                <div class="appointment-info">
+                    <h3>John Doe</h3>
+                    <p>Video Consultation</p>
+                    <p>10:00 am, Jun 10, 2023</p>
+                </div>
+                <div class="appointment-actions">
+                    <button class="btn cancel">Cancel</button>
+                    <button class="btn reschedule">Reschedule</button>
+                    <button class="btn confirm">Confirm</button>
+                </div>
+            </div>
+
+            <div class="appointment-card" data-status="confirmed" data-time="11:00 am, Jun 24, 2023" data-type="chat">
+                <img src="https://via.placeholder.com/50" alt="Doctor">
+                <div class="appointment-info">
+                    <h3>Jane Smith</h3>
+                    <p>Chat Consultation</p>
+                    <p>11:00 am, Jun 24, 2023</p>
+                </div>
+                <div class="appointment-actions">
+                    <button class="btn cancel">Cancel</button>
+                    <button class="btn reschedule">Reschedule</button>
+                    <button class="btn confirm">Confirm</button>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+
+    <script>
+         function updateDate() {
+    const now = new Date();
+
+    // Get formatted date
+    const formattedDate = now.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
+
+    // Update the display
+    document.getElementById('date-display').textContent =` Date: ${formattedDate}`;
+}
+
+// Update the date every day at midnight
+setInterval(updateDate, 86400000); // 86400000ms = 24 hours
+
+// Initialize the date immediately
+updateDate();
+
+        
+
+        // Get the necessary DOM elements
+        const searchBar = document.getElementById('search-bar');
+        const sortOptions = document.getElementById('sort-options');
+        const appointmentTypeSelect = document.getElementById('appointment-type');
+        const appointmentsList = document.getElementById('appointments-list');
+        const appointmentCards = Array.from(appointmentsList.getElementsByClassName('appointment-card'));
+
+        // Function to filter appointments based on search input and selected filters
+        searchBar.addEventListener('input', () => {
+            filterAppointments();
+        });
+
+        appointmentTypeSelect.addEventListener('change', () => {
+            filterAppointments();
+        });
+
+        sortOptions.addEventListener('change', () => {
+            sortAppointments();
+        });
+
+        // Function to filter appointments based on status, timing, and appointment type
+        function filterAppointments() {
+            const searchQuery = searchBar.value.toLowerCase();
+            const selectedType = appointmentTypeSelect.value;
+
+            appointmentCards.forEach(card => {
+                const status = card.dataset.status.toLowerCase();
+                const time = card.dataset.time.toLowerCase();
+                const name = card.querySelector('h3').textContent.toLowerCase();
+                const type = card.dataset.type.toLowerCase();
+
+                const matchesSearch = status.includes(searchQuery) || time.includes(searchQuery) || name.includes(searchQuery);
+                const matchesType = selectedType === '' || type === selectedType;
+
+                if (matchesSearch && matchesType) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Function to sort appointments based on the selected sort option (List, Week, Day)
+        function sortAppointments() {
+            const sortValue = sortOptions.value;
+
+            if (sortValue === 'list') {
+                appointmentCards.forEach(card => {
+                    card.style.display = 'flex';
+                });
+            } else if (sortValue === 'week' || sortValue === 'day') {
+                // For simplicity, we will just sort by time here
+                const sortedCards = appointmentCards.sort((a, b) => new Date(a.dataset.time) - new Date(b.dataset.time));
+
+                appointmentsList.innerHTML = '';
+                sortedCards.forEach(card => {
+                    appointmentsList.appendChild(card);
+                });
+            }
+        }
+        document.querySelectorAll('.appointment-card').forEach(card => {
+    const buttons = card.querySelectorAll('.btn');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Disable other buttons in the same card
+            buttons.forEach(btn => {
+                if (btn !== button) {
+                    btn.disabled = true;
+                    btn.style.backgroundColor = '#ccc'; // Set to grey
+                    btn.style.cursor = 'not-allowed';
+                } else {
+                    btn.style.backgroundColor = button.classList.contains('confirm')
+                        ? '#4caf50'
+                        : button.classList.contains('cancel')
+                        ? '#f44336'
+                        : '#ff9800';
+                }
+            });
+        });
+
+        // Add hover effect for enabled buttons
+        button.addEventListener('mouseenter', () => {
+            if (!button.disabled) {
+                button.style.filter = 'brightness(0.9)';
+            }
+        });
+
+        button.addEventListener('mouseleave', () => {
+            if (!button.disabled) {
+                button.style.filter = 'none';
+            }
+        });
+    });
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const appointmentsList = document.getElementById('appointments-list');
+    const appointmentCards = Array.from(appointmentsList.getElementsByClassName('appointment-card'));
+
+    // Save button states in localStorage
+    function saveButtonState(cardId, action) {
+        const buttonState = JSON.parse(localStorage.getItem('buttonState')) || {};
+        buttonState[cardId] = action;
+        localStorage.setItem('buttonState', JSON.stringify(buttonState));
+    }
+
+    // Apply button states from localStorage
+    function applyButtonStates() {
+        const buttonState = JSON.parse(localStorage.getItem('buttonState')) || {};
+
+        appointmentCards.forEach(card => {
+            const cardId = card.dataset.time;
+            const action = buttonState[cardId];
+
+            if (action) {
+                const buttons = card.querySelectorAll('.btn');
+                buttons.forEach(button => {
+                    const isActive = button.classList.contains(action);
+                    button.disabled = !isActive;
+                    button.style.backgroundColor = isActive
+                        ? action === 'confirm' ? '#4caf50'
+                        : action === 'cancel' ? '#f44336'
+                        : '#ff9800'
+                        : '#ccc';
+                    button.style.cursor = isActive ? 'pointer' : 'not-allowed';
+                });
+            }
+        });
+    }
+
+    // Attach click event listeners to buttons
+    appointmentCards.forEach(card => {
+        const buttons = card.querySelectorAll('.btn');
+        const cardId = card.dataset.time;
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const action = button.classList.contains('confirm') ? 'confirm'
+                    : button.classList.contains('cancel') ? 'cancel'
+                    : 'reschedule';
+
+                saveButtonState(cardId, action);
+
+                buttons.forEach(btn => {
+                    btn.disabled = btn !== button;
+                    btn.style.backgroundColor = btn === button
+                        ? action === 'confirm' ? '#4caf50'
+                        : action === 'cancel' ? '#f44336'
+                        : '#ff9800'
+                        : '#ccc';
+                    btn.style.cursor = btn === button ? 'pointer' : 'not-allowed';
+                });
+            });
+
+            // Add hover effects for enabled buttons
+            button.addEventListener('mouseenter', () => {
+                if (!button.disabled) {
+                    button.style.filter = 'brightness(0.9)';
+                }
+            });
+
+            button.addEventListener('mouseleave', () => {
+                if (!button.disabled) {
+                    button.style.filter = 'none';
+                }
+            });
+        });
+    });
+
+    // Initialize and apply states
+    applyButtonStates();
+});
+  // Function to display Doctor's ID from sessionStorage
+  function displayDoctorId() {
+            const storedData = sessionStorage.getItem("loggedInDoctorId");
+
+            // Check if data exists
+            if (storedData) {
+                document.getElementById('doctor-id').textContent = `Doctor ID: ${storedData}`;
+            } else {
+                console.log("No doctor data found in sessionStorage.");
+            }
+        }
+
+        // Call the display function when the page loads
+        document.addEventListener('DOMContentLoaded', displayDoctorId);
+    </script>
+</body>
+</html>

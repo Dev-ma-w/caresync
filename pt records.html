@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            display: flex;
+        }
+
+        .sidebar {
+      width: 250px;
+      height: 100vh;
+      background: #1f2937;
+      color: white;
+      position: fixed;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 15px;
+      box-sizing: border-box;
+    }
+
+    .sidebar .logo {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .sidebar img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 30px;
+      border-radius: 10px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar ul li {
+      margin: 10px 0;
+    }
+
+    .sidebar ul li a {
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+      display: block;
+      padding: 12px 20px;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+
+    .sidebar ul li a:hover {
+      background: #374151;;
+      color: white;
+    
+        }
+
+        .main-content {
+            margin-left: 250px; /* Align the main content next to the sidebar */
+            width: calc(100% - 250px); /* Adjust width to fit with sidebar */
+            box-sizing: border-box;
+        }
+
+        .header {
+            background-color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 18px;
+            margin: 0;
+        }
+
+        .header h1 span {
+            color: grey;
+            font-size: 14px;
+            margin-left: 8px;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .year {
+            font-size: 16px;
+            color: #555;
+            margin: 20px 0 10px;
+        }
+
+        .record-card {
+            background: #ffffff;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .record-card .date {
+            text-align: center;
+            background-color: #e9f4fb;
+            color: #1e88e5;
+            padding: 10px;
+            border-radius: 8px;
+            width: 70px;
+            font-weight: bold;
+        }
+
+        .record-card .details {
+            flex-grow: 1;
+            margin-left: 15px;
+        }
+
+        .record-card .details h4 {
+            margin: 0;
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .record-card .details p {
+            margin: 5px 0 0;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .record-card .details .time {
+            margin: 5px 0 0;
+            font-size: 12px;
+            color: #555;
+        }
+
+        .record-card .button {
+            background-color: #1e88e5;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .record-card .button:hover {
+            background-color: #005cb2;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .bottom-nav a {
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+            text-decoration: none;
+        }
+
+        .bottom-nav a.active {
+            color: #1e88e5;
+        }
+
+        .bottom-nav a i {
+            display: block;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="logo">CareSync</div>
+            <img src="https://cdn.dribbble.com/userupload/16410591/file/original-c51d0c42ed6debc77969e5d0bb9ae570.png?resize=1600x1200">
+    <ul>
+        <li><a href="pt dashboard.html" class="active">Dashboard</a></li>
+        <li><a href="pt appointment.html">Appointments</a></li>
+        <li><a href="pt records.html">Records</a></li>
+        <li><a href="pt settings.html">Profile</a></li>
+    </ul>
+</div>
+
+<div class="main-content">
+    <div class="header">
+        <h1>Health Records <span>(Time Line History)</span></h1>
+    </div>
+
+    <div class="container">
+        <div class="year">2024</div>
+        <div class="record-card">
+            <div class="date">
+                <div>01</div>
+                <div>Oct</div>
+            </div>
+            <div class="details">
+                <h4>Hemika's Prescription</h4>
+                <p>Consulted Dr. Ezhilan</p>
+                <p class="time">8:49 PM</p>
+            </div>
+            <button class="button">View Prescription</button>
+        </div>
+
+        <div class="record-card">
+            <div class="date">
+                <div>02</div>
+                <div>Sep</div>
+            </div>
+            <div class="details">
+                <h4>Hemika's Prescription</h4>
+                <p>Consulted Dr. Ezhilan</p>
+                <p class="time">11:48 AM</p>
+            </div>
+            <button class="button">View Prescription</button>
+        </div>
+
+        <div class="year">2023</div>
+        <div class="record-card">
+            <div class="date">
+                <div>22</div>
+                <div>Nov</div>
+            </div>
+            <div class="details">
+                <h4>Hemika's Prescription</h4>
+                <p>Consulted Dr. Ezhilan</p>
+                <p class="time">8:37 PM</p>
+            </div>
+            <button class="button">View Prescription</button>
+        </div>
+
+        <div class="record-card">
+            <div class="date">
+                <div>18</div>
+                <div>Oct</div>
+            </div>
+            <div class="details">
+                <h4>Hemika's Prescription</h4>
+                <p>Consulted Dr. Ezhilan</p>
+                <p class="time">12:29 PM</p>
+            </div>
+            <button class="button">View Prescription</button>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

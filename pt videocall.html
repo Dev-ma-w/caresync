@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Video Call UI</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .video-call-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+        }
+
+        .video-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            background-color: #000;
+        }
+
+        .patient-video, .doctor-video {
+            width: 80%;
+            max-width: 700px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .doctor-video {
+            position: absolute;
+            width: 25%;
+            bottom: 10px;
+            right: 10px;
+            border: 2px solid #ffffff;
+            z-index: 10;
+        }
+
+        .controls-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-color: #f7f7f7;
+            border-top: 1px solid #ccc;
+            width: 100%;
+        }
+
+        .control-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
+        }
+
+        .control-button:hover {
+            background-color: #0056b3;
+        }
+
+        .control-button img {
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="video-call-container">
+        <div class="video-section">
+            <video class="patient-video" autoplay muted></video>
+            <video class="doctor-video" autoplay></video>
+        </div>
+
+        <div class="controls-section">
+            <button class="control-button" id="mute-btn" title="Mute/Unmute">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/microphone.png" alt="Mute Button">
+            </button>
+            <button class="control-button" id="video-btn" title="Enable/Disable Video">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/video-call.png" alt="Video Button">
+            </button>
+            <button class="control-button" id="end-call-btn" title="End Call">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/phone.png" alt="End Call Button">
+            </button>
+        </div>
+    </div>
+
+    <script>
+        
+    const patientVideo = document.querySelector('.patient-video');
+    const doctorVideo = document.querySelector('.doctor-video');
+
+    async function startVideoCall() {
+        try {
+            // Access patient media stream (video and audio)
+            const patientStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+            patientVideo.srcObject = patientStream;
+            patientVideo.play();
+
+            // Simulate a remote doctor stream for demo purposes
+            const doctorStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+            doctorVideo.srcObject = doctorStream;
+            doctorVideo.play();
+
+            // Log track statuses for debugging
+            console.log('Audio Tracks:', patientStream.getAudioTracks());
+            console.log('Video Tracks:', patientStream.getVideoTracks());
+
+        } catch (error) {
+            console.error('Error accessing media devices:', error);
+            alert('Could not access your camera and microphone. Please check permissions.');
+        }
+    }
+
+    startVideoCall();
+
+    // Mute/Unmute Audio
+    const muteBtn = document.getElementById('mute-btn');
+    muteBtn.addEventListener('click', () => {
+        const audioTracks = patientVideo.srcObject.getAudioTracks();
+        if (audioTracks.length > 0) {
+            audioTracks[0].enabled = !audioTracks[0].enabled;
+            muteBtn.querySelector('img').src = audioTracks[0].enabled
+                ? 'https://img.icons8.com/ios-filled/50/ffffff/microphone.png'
+                : 'https://img.icons8.com/ios-filled/50/ffffff/mute-microphone.png';
+        }
+    });
+
+    // Enable/Disable Video
+    const videoBtn = document.getElementById('video-btn');
+    videoBtn.addEventListener('click', () => {
+        const videoTracks = patientVideo.srcObject.getVideoTracks();
+        if (videoTracks.length > 0) {
+            videoTracks[0].enabled = !videoTracks[0].enabled;
+            videoBtn.querySelector('img').src = videoTracks[0].enabled
+                ? 'https://img.icons8.com/ios-filled/50/ffffff/video-call.png'
+                : 'https://img.icons8.com/ios-filled/50/ffffff/no-video.png';
+        }
+    });
+
+    // End Call
+    const endCallBtn = document.getElementById('end-call-btn');
+    endCallBtn.addEventListener('click', () => {
+        if (patientVideo.srcObject) {
+            patientVideo.srcObject.getTracks().forEach(track => track.stop());
+        }
+        if (doctorVideo.srcObject) {
+            doctorVideo.srcObject.getTracks().forEach(track => track.stop());
+        }
+        alert('Call ended');
+    });
+
+
+
+    </script>
+</body>
+</html>

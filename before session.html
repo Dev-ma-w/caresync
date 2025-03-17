@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Confirmation</title>
+    <style>
+        /* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Alert box container */
+.alert-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.alert-box {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+.alert-box h2 {
+    color: #333;
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.alert-message {
+    color: #555;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.consultation-options {
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.consultation-options p {
+    color: #333;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 45%;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.pay-btn {
+    background-color: #28a745;
+}
+
+.pay-btn:disabled {
+    background-color: #d6d6d6;
+    cursor: not-allowed;
+}
+
+.pay-btn:hover {
+    background-color: #218838;
+}
+
+.access-btn {
+    background-color: #17a2b8;
+}
+
+.access-btn:disabled {
+    background-color: #d6d6d6;
+    cursor: not-allowed;
+}
+
+.access-btn:hover {
+    background-color: #138496;
+}
+
+    </style>
+</head>
+<body>
+    <div class="alert-container">
+        <div class="alert-box">
+            <h2>Appointment Confirmation</h2>
+            <p class="alert-message">Your appointment has been confirmed for <strong>January 15, 2025, 10:00 AM</strong>.</p>
+            <div class="consultation-options">
+                <p><strong>Consultation Type:</strong> <span id="consultation-type">Video Consultation</span></p>
+                <p>Your session will begin in <span id="time-remaining">15 minutes</span>. Please click below to access the consultation.</p>
+                <p><strong>Payment Amount: Rs. <span id="payment-amount">200</span></strong></p>
+                <div class="button-container">
+                    <button id="pay-btn" class="btn pay-btn">Pay Now</button>
+                    <button id="access-btn" class="btn access-btn" disabled>Access Video Consultation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to handle session timing, payment, and button activation
+        const sessionTime = new Date('2025-01-15T10:00:00'); // Appointment time
+        const currentTime = new Date();
+        let paymentMade = false;
+        let consultationType = 'Video'; // Default consultation type (can be 'Chat' or 'Video')
+
+        // Set payment amount and consultation type based on the consultation
+        function setConsultationDetails() {
+            if (consultationType === 'Chat') {
+                document.getElementById('consultation-type').textContent = 'Chat Consultation';
+                document.getElementById('payment-amount').textContent = '100';
+            } else {
+                document.getElementById('consultation-type').textContent = 'Video Consultation';
+                document.getElementById('payment-amount').textContent = '200';
+            }
+        }
+
+        // Function to update the countdown and enable the button 15 minutes before the session
+        function updateTime() {
+            const timeDifference = sessionTime - currentTime;
+            const fifteenMinutesBefore = 15 * 60 * 1000; // 15 minutes in milliseconds
+            
+            if (timeDifference <= fifteenMinutesBefore && timeDifference > 0 && paymentMade) {
+                document.getElementById('access-btn').disabled = false;
+                document.getElementById('time-remaining').textContent = "15 minutes";
+            } else if (timeDifference <= 0 && paymentMade) {
+                document.getElementById('access-btn').disabled = false;
+                document.getElementById('time-remaining').textContent = "Session started. You can now join!";
+            } else if (!paymentMade) {
+                document.getElementById('access-btn').disabled = true;
+                document.getElementById('time-remaining').textContent = "Please pay to access the consultation.";
+            } else {
+                document.getElementById('access-btn').disabled = true;
+                document.getElementById('time-remaining').textContent = "Your session will begin in " + Math.floor(timeDifference / 60000) + " minutes.";
+            }
+        }
+
+        // Function to simulate payment and enable access button
+        document.getElementById('pay-btn').addEventListener('click', function() {
+            // Simulate payment process
+            paymentMade = true;
+            document.getElementById('pay-btn').disabled = true; // Disable pay button after payment
+            document.getElementById('pay-btn').textContent = "Paid"; // Change text to show payment status
+            updateTime(); // Update time and button status after payment
+        });
+
+        // Update the time and button states initially
+        setInterval(() => {
+            updateTime();
+        }, 60000); // Update every minute
+
+        // Call once to initialize immediately
+        setConsultationDetails();
+        updateTime();
+    </script>
+</body>
+</html>

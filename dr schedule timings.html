@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doctor Schedule Management</title>
+  <style>
+    /* Basic reset and layout */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: flex-start;
+      height: 100vh;
+    }
+
+    /* Container for the whole dashboard */
+    .dashboard-container {
+      display: flex;
+      width: 100%;
+      max-width: 1650px;
+      height: 100%;
+      background-color: white;
+    }
+
+    /* Sidebar Styling */
+    .sidebar {
+      width: 250px;
+      background-color: #1f2937;
+      color: #ffffff;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .sidebar .logo {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .sidebar img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 30px;
+      border-radius: 10px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      width: 100%;
+    }
+
+    .sidebar ul li {
+      width: 100%;
+      margin: 10px 0;
+    }
+
+    .sidebar ul li a {
+      color: #ffffff;
+      text-decoration: none;
+      padding: 12px 15px;
+      display: block;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar ul li a:hover, .sidebar ul li a.active {
+      background-color: #374151;
+    }
+
+
+    /* Main content styling */
+    main {
+      margin-left: 250px; /* Adjust for sidebar width */
+      padding: 30px;
+      width: 100%;
+      overflow: auto;
+    }
+
+    .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header input {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .header .add-patient-btn {
+            background-color: #fff;
+            color: #fff;
+            padding: 10px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+    .days {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .day {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      margin: 5px;
+      background-color: #e0e0e0;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .day.active {
+      background-color: #6200ea;
+      color: white;
+    }
+
+    .schedule {
+      margin-bottom: 20px;
+    }
+
+    #events-list .event {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      margin: 5px 0;
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    #events-list .delete-event {
+      color: red;
+      cursor: pointer;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #6200ea;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #3700b3;
+    }
+
+    /* Updated Opening Hours Section */
+    .opening-hours {
+  display: flex; /* Allows for flexible layout */
+  flex-direction: column; /* Aligns content vertically */
+  padding: 20px; /* Adds padding inside the container */
+  background-color: #f4f4f4; /* Sets a background color */
+  border-radius: 8px; /* Rounds the corners of the container */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds subtle shadow for depth */
+  width: 100%; /* Makes the container take up the full width of its parent */
+  max-width: 600px; /* Sets a maximum width */
+  margin: 0 auto; /* Centers the container horizontally */
+}
+
+.opening-day {
+  display: flex;
+  align-items: center; /* Aligns inputs and labels */
+  justify-content: space-between;
+  margin-bottom: 15px; /* More spacing between rows */
+  width: 100%; /* Ensures the content stretches across the container */
+}
+
+.opening-day span {
+  width: 40%; /* Adjusts label width to fit better */
+  text-align: left;
+  margin-right: 10px; /* Adds spacing between label and input fields */
+}
+
+.opening-day input {
+  width: 45%; /* Input fields now take up 45% width */
+  padding: 7px;
+  margin-left: 10px; /* Adds space between input fields */
+  border: 1px solid #ccc; /* Adds a border around the inputs */
+  border-radius: 5px; /* Rounded corners for input fields */
+}
+
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">CareSync</div>
+      <img src="https://cdn.dribbble.com/userupload/16410591/file/original-c51d0c42ed6debc77969e5d0bb9ae570.png?resize=1600x1200">
+      <ul>
+        <li><a href="dr dashboard.html">Overview</a></li>
+        <li><a href="dr appointment.html">Appointment</a></li>
+        <li><a href="dr my patients.html">My Patients</a></li>
+        <li><a href="dr schedule timings.html" class="active">Schedule Timings</a></li>
+        <li><a href="dr payments.html">Payments</a></li>
+        <li><a href="dr messages.html">Messages</a></li>
+        <li><a href="dr settings.html">Settings</a></li>
+        <li><a href="logout.html">logout</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main>
+      <header>
+        <h1>Schedule Timings</h1><br>
+        <h2 id="current-day"></h2><br>
+      </header>
+      
+      <section class="days">
+        <div class="day" data-day="Sunday">Sunday</div>
+        <div class="day" data-day="Monday">Monday</div>
+        <div class="day" data-day="Tuesday">Tuesday</div>
+        <div class="day" data-day="Wednesday">Wednesday</div>
+        <div class="day" data-day="Thursday">Thursday</div>
+        <div class="day" data-day="Friday">Friday</div>
+        <div class="day" data-day="Saturday">Saturday</div>
+      </section>
+      
+      <section class="schedule">
+        <div id="events-list"></div>
+        <button id="addEventButton">+ Add Event</button>
+      </section>
+
+      <section class="opening-hours">
+        <h3>Set Opening Hours</h3>
+        <div id="opening-hours-form">
+          <div class="opening-day" data-day="Sunday">
+            <span>Sunday</span>
+            <input type="text" id="morning-sunday" placeholder="Morning: Open - Close" readonly>
+            <input type="text" id="evening-sunday" placeholder="Evening: Open - Close" readonly>
+          </div>
+          <div class="opening-day" data-day="Monday">
+            <span>Monday</span>
+            <input type="text" id="morning-monday" placeholder="Morning: Open - Close" readonly>
+            <input type="text" id="evening-monday" placeholder="Evening: Open - Close" readonly>
+          </div>
+          <div class="opening-day" data-day="Tuesday">
+            <span>Tuesday</span>
+            <input type="text" id="morning-tuesday" placeholder="Morning: Open - Close" readonly>
+            <input type="text" id="evening-tuesday" placeholder="Evening: Open - Close" readonly>
+          </div>
+          <div class="opening-day" data-day="Wednesday">
+            <span>Wednesday</span>
+            <input type="text" id="morning-wednesday" placeholder="Morning: Open - Close" readonly>
+            <input type="text" id="evening-wednesday" placeholder="Evening: Open - Close" readonly>
+          </div>
+          <div class="opening-day" data-day="Thursday">
+            <span>Thursday</span>
+            <input type="text" id="morning-thursday" placeholder="Morning: Open - Close" readonly>
+            <input type="text" id="evening-thursday" placeholder="Evening: Open - Close" readonly>
+          </div>
+          <div class="opening-day" data-day="Friday">
+            <span>Friday</span>
+            <input type="text" id="morning-friday" placeholder="Morning: Open - Close" readonly>
+            <input type="text" id="evening-friday" placeholder="Evening: Open - Close" readonly>
+          </div>
+          <div class="opening-day" data-day="Saturday">
+            <span>Saturday</span>
+            <input type="text" id="morning-saturday" placeholder="Morning: Open - Close" readonly>
+            <input type="text" id="evening-saturday" placeholder="Evening: Open - Close" readonly>
+          </div>
+          <button id="saveOpeningHours">Save Changes</button>
+          <button id="editOpeningHours" style="display: none;">Edit</button>
+        </div>
+      </section>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const days = document.querySelectorAll(".day");
+          const eventsList = document.getElementById("events-list");
+          const addEventButton = document.getElementById("addEventButton");
+          const currentDayTitle = document.getElementById("current-day");
+          const saveOpeningHoursButton = document.getElementById("saveOpeningHours");
+          const editOpeningHoursButton = document.getElementById("editOpeningHours");
+      
+          // Load events from localStorage or initialize
+          let events = JSON.parse(localStorage.getItem("events")) || {
+            Sunday: [],
+            Monday: [],
+            Tuesday: [],
+            Wednesday: [],
+            Thursday: [],
+            Friday: [],
+            Saturday: [],
+          };
+      
+          // Load opening hours from localStorage or initialize
+          let openingHours = JSON.parse(localStorage.getItem("openingHours")) || {
+            Sunday: { morning: "", evening: "" },
+            Monday: { morning: "", evening: "" },
+            Tuesday: { morning: "", evening: "" },
+            Wednesday: { morning: "", evening: "" },
+            Thursday: { morning: "", evening: "" },
+            Friday: { morning: "", evening: "" },
+            Saturday: { morning: "", evening: "" },
+          };
+      
+          // Save events to localStorage
+          function saveEventsToLocalStorage() {
+            localStorage.setItem("events", JSON.stringify(events));
+          }
+      
+          // Save opening hours to localStorage
+          function saveOpeningHoursToLocalStorage() {
+            localStorage.setItem("openingHours", JSON.stringify(openingHours));
+          }
+          
+      
+          // Update event list for the selected day
+          function updateEventList(dayName) {
+            eventsList.innerHTML = ""; // Clear the list
+            events[dayName].forEach((event, index) => {
+              const eventElement = document.createElement("div");
+              eventElement.classList.add("event");
+              eventElement.innerHTML = `
+                <span>${event.name} - ${event.time}</span>
+                <span class="delete-event" data-day="${dayName}" data-index="${index}">Delete</span>
+              `;
+              eventsList.appendChild(eventElement);
+            });
+      
+            // Add delete functionality
+            document.querySelectorAll(".delete-event").forEach((button) => {
+              button.addEventListener("click", (e) => {
+                const day = e.target.dataset.day;
+                const index = e.target.dataset.index;
+                events[day].splice(index, 1);
+                saveEventsToLocalStorage();
+                updateEventList(day);
+              });
+            });
+          }
+      
+          // Get the current date for the selected day
+function getDateForDay(dayName) {
+  const today = new Date();
+  const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const currentDayIndex = today.getDay(); // Get today's day index (0-6 for Sunday-Saturday)
+  const targetDayIndex = daysOfWeek.indexOf(dayName);
+
+  // Calculate the offset in days to the target day
+  const dayOffset = (targetDayIndex - currentDayIndex + 7) % 7; // Ensure it handles week wrapping
+
+  // Add the offset to today's date
+  const targetDate = new Date();
+  targetDate.setDate(today.getDate() + dayOffset);
+
+  // Format the date to display (e.g., Sunday, 5 January 2025)
+  const options = { weekday: "long", day: "numeric", month: "long", year: "numeric" };
+  return targetDate.toLocaleDateString(undefined, options);
+}
+
+// Handle day selection
+days.forEach((day) => {
+  day.addEventListener("click", () => {
+    // Remove active class from all days and set it for the selected one
+    days.forEach((d) => d.classList.remove("active"));
+    day.classList.add("active");
+
+    // Get the selected day name and calculate its corresponding date
+    const selectedDay = day.dataset.day;
+    currentDayTitle.innerText =` Events for ${getDateForDay(selectedDay)}`;
+
+    // Update the event list for the selected day
+    updateEventList(selectedDay);
+  });
+});
+
+          // Add a new event
+          addEventButton.addEventListener("click", () => {
+            const activeDay = document.querySelector(".day.active").dataset.day;
+            const eventName = prompt("Enter Event Name:");
+            const eventTime = prompt("Enter Event Time (e.g., 9:00 AM - 11:00 AM):");
+      
+            if (eventName && eventTime) {
+              events[activeDay].push({ name: eventName, time: eventTime });
+              saveEventsToLocalStorage();
+              updateEventList(activeDay);
+            }
+          });
+      
+          // Enable input fields for editing
+          function toggleInputs(editable) {
+            document.querySelectorAll(".opening-day input").forEach((input) => {
+              input.readOnly = !editable;
+              input.style.backgroundColor = editable ? "white" : "#f0f0f0";
+            });
+          }
+      
+          // Save opening hours
+          saveOpeningHoursButton.addEventListener("click", () => {
+            document.querySelectorAll(".opening-day").forEach((day) => {
+              const dayName = day.dataset.day;
+              const morningTime = day.querySelector(`#morning-${dayName.toLowerCase()}`).value;
+              const eveningTime = day.querySelector(`#evening-${dayName.toLowerCase()}`).value;
+      
+              openingHours[dayName] = { morning: morningTime, evening: eveningTime };
+            });
+      
+            saveOpeningHoursToLocalStorage();
+            alert("Opening hours saved successfully!");
+      
+            // Disable input fields and show the Edit button
+            toggleInputs(false);
+            editOpeningHoursButton.style.display = "inline-block";
+          });
+      
+          // Enable editing of opening hours
+          editOpeningHoursButton.addEventListener("click", () => {
+            toggleInputs(true);
+            alert("You can now edit the opening hours. Save the changes once you're done.");
+          });
+      
+          // Initialize inputs with saved data and make them read-only
+          document.querySelectorAll(".opening-day").forEach((day) => {
+            const dayName = day.dataset.day;
+            day.querySelector(`#morning-${dayName.toLowerCase()}`).value = openingHours[dayName].morning || "";
+            day.querySelector(`#evening-${dayName.toLowerCase()}`).value = openingHours[dayName].evening || "";
+          });
+          toggleInputs(false);
+        
+       
+  });
+      </script>       
+</body>
+</html>

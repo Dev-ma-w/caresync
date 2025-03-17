@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospital Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f7f7;
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(135deg, #4f8a8b, #0f3d3e);
+      color: white;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      font-size: 36px;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    nav {
+      background-color: #0f3d3e;
+      color: white;
+      display: flex;
+      justify-content: center;
+      padding: 12px 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 15px 30px;
+      font-size: 16px;
+      font-weight: 500;
+      transition: background-color 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #4f8a8b;
+      border-radius: 5px;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 20px;
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+
+    .content .container {
+      padding: 20px;
+      background: #ffffff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    .content img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .About, .Chairman {
+      text-align: center;
+    }
+
+    .About h2, .Chairman h2 {
+      font-size: 30px;
+      color: #0f3d3e;
+      margin-bottom: 10px;
+    }
+
+    .About p, .Chairman p {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #555;
+      margin-bottom: 15px;
+      text-align: justify;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #0f3d3e;
+      color: white;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 28px;
+      }
+
+      .content {
+        grid-template-columns: 1fr;
+      }
+
+      .content img {
+        margin-bottom: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      nav a {
+        padding: 10px 15px;
+        font-size: 14px;
+      }
+
+      .About h2, .Chairman h2 {
+        font-size: 24px;
+      }
+
+      .About p, .Chairman p {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CareSync Portal</h1>
+  </header>
+  <nav>
+    <a href="homepage.html">Home</a>
+    <a href="dr login.html">Doctor Login</a>
+    <a href="pt login.html">Patient Login</a>
+  </nav>
+
+  <div class="content">
+    <div>
+      <img src="https://advinhealthcare.com/wp-content/uploads/2022/12/Types-of-Hospitals-2.jpg" alt="About Image">
+    </div>
+    <div class="container About">
+      <h2>About CareSync</h2>
+      <p>CareSync Hospital is the largest multispecialty hospital in Tanjore. We extend the traditional Indian hospitality to Indian and international patients, combining it with our cutting-edge technology. For more than 10 years, CareSync Hospital, Thanjavur, has been a household name in the Delta region of Tamil Nadu for providing world-class healthcare at affordable cost.</p>
+      <p>Our healthcare model is structured to meet the rising challenges in the field of medicine and offers comprehensive care to patients. We offer the widest and most comprehensive range of outpatient and inpatient services to ensure a wholesome patient experience.</p>
+    </div>
+    <div class="container Chairman">
+      <h2>Chairman's Message</h2>
+      <p>‘Trust flowers upon the soil of hard work and the rain of honesty. It blooms quickly. The true challenge lies in keeping it.’</p>
+      <p>As CareSync Hospital, Thanjavur completes its 10th year, we take pride in being true to the trust of our patients in every possible way. With over 10 lakh patients treated so far, our relationship with them has only strengthened over time.</p>
+      <p>We began with the mission of providing ‘World-class healthcare at affordable prices.’ Our achievements over the last 10 years have made us the most reputed and sought-after hospital in Delta Region of Tamil Nadu.</p>
+      <p>– Dr. S. Gurushankar</p>
+    </div>
+    <div>
+      <img src="https://thumbs.dreamstime.com/b/chairman-board-cartoon-flat-vector-illustration-concept-chairman-board-cartoon-flat-illustration-concept-isolated-102410527.jpg" alt="Chairman's Image">
+    </div>
+  </div>
+  
+
+  <footer>
+      <i class="Email"></i>Email: <a href="mailto:support@caresyncportal.com" style="color: antiquewhite;">support@caresyncportal.com</a> &nbsp; &nbsp; &nbsp; &nbsp;
+      <i class="Phone"></i>Phone: <a href="tel:+18001234567" style="color: antiquewhite;">+1 800-123-4567</a>
+    </footer>
+</body>
+</html>

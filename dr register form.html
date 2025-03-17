@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+        }
+        .form-container h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-group label .required {
+            color: red;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #007BFF;
+            box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .popup button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .popup button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Doctor Registration</h2>
+        <form id="doctorForm">
+            <div class="form-group">
+                <label>Full Name <span class="required">*</span></label>
+                <input type="text" id="fullName" placeholder="Enter your full name" maxlength="50" required>
+            </div>
+            <div class="form-group">
+                <label>Email <span class="required">*</span></label>
+                <input type="email" id="email" placeholder="Enter your email" maxlength="50" required>
+            </div>
+            <div class="form-group">
+                <label>Address <span class="required">*</span></label>
+                <input type="text" id="address" placeholder="Enter your address" maxlength="100" required>
+            </div>
+            <div class="form-group">
+                <label>Phone Number <span class="required">*</span></label>
+                <input type="text" id="phone" placeholder="Enter your phone number" maxlength="10" required>
+            </div>
+            <div class="form-group">
+                <label>Date of Birth <span class="required">*</span></label>
+                <input type="text" id="dob" placeholder="Enter your DOB(DD/MM/YYYY)" maxlength="10" required>
+            </div>
+            <div class="form-group">
+                <label>Speciality <span class="required">*</span></label>
+                <input type="text" id="speciality" placeholder="Enter your speciality" maxlength="30" required>
+            </div>
+            <div class="form-group">
+                <label>Hospital Name <span class="required">*</span></label>
+                <input type="text" id="hospitalName" placeholder="Enter hospital name" maxlength="50" required>
+            </div>
+            <div class="form-group">
+                <label>Experience (years) <span class="required">*</span></label>
+                <input type="number" id="experience" placeholder="Enter your experience" min="0" max="50" required>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+    <div class="popup" id="popup">
+        <h3>Registration Successful!</h3>
+        <p>Your Doctor ID: <span id="doctorId"></span></p>
+        <button id="setPasswordBtn">Set Password</button>
+    </div>
+
+    <script>
+   // Load data from localStorage
+const userData = JSON.parse(localStorage.getItem('userData')) || {};
+
+document.getElementById('doctorForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const fullName = document.getElementById('fullName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const dob = document.getElementById('dob').value.trim();
+    const speciality = document.getElementById('speciality').value.trim();
+    const hospitalName = document.getElementById('hospitalName').value.trim();
+    const experience = document.getElementById('experience').value.trim();
+
+    // Check if email is already registered
+    if (userData[email]) {
+        alert('This email is already registered!');
+        return;
+    }
+
+    // Generate unique Doctor ID based on timestamp
+    const docID = 'DOC' + Math.floor(Math.random() * 10000); // Generates a random ID between DOC0 to DOC9999
+
+
+    // Store the doctor's data, including a placeholder for password
+    userData[email] = {
+        fullName,
+        email,
+        address,
+        phone,
+        dob,
+        speciality,
+        hospitalName,
+        experience,
+        docID,
+        password: "" // Placeholder for password, to be set later
+    };
+
+    // Save user data to localStorage
+    localStorage.setItem('userData', JSON.stringify(userData));
+
+    // Display the registration popup with the generated Doctor ID
+    document.getElementById('doctorId').textContent = docID;
+    document.getElementById('popup').style.display = 'block';
+});
+
+document.getElementById('setPasswordBtn').addEventListener('click', function () {
+    const email = document.getElementById('email').value.trim();
+    const user = userData[email];
+
+    // If the user does not exist, show an error
+    if (!user) {
+        alert('Invalid operation!');
+        return;
+    }
+
+    let password;
+    while (true) {
+        // Prompt for password with criteria
+        password = prompt(
+            "Password must meet the following criteria:\n" +
+            "- At least 8 characters long\n" +
+            "- Include at least one uppercase letter\n" +
+            "- Include at least one special character (!@#$%^&*)"
+        );
+
+        // If the user cancels the prompt, exit
+        if (!password) return;
+
+        const hasUppercase = /[A-Z]/.test(password);
+        const hasSpecialChar = /[!@#$%^&*]/.test(password);
+        const isValidLength = password.length >= 8;
+
+        // Check if the password meets the criteria
+        if (hasUppercase && hasSpecialChar && isValidLength) {
+            // Encrypt and store the password in the userData object
+            userData[email].password = btoa(password); // Encrypt password using Base64
+
+            // Save updated data to localStorage
+            localStorage.setItem('userData', JSON.stringify(userData));
+
+            alert('Password set successfully!');
+            window.location.href = 'homepage.html'; // Redirect to login page
+            break;
+        } else {
+            alert('Password does not meet the criteria. Please try again.');
+        }
+    }
+});
+</script>
+</body>
+</html>

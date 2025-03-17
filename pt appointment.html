@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appointments</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f6f9;
+      display: flex;
+    }
+
+    .sidebar {
+      width: 250px;
+      height: 100vh;
+      background: #1f2937;
+      color: white;
+      position: fixed;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 15px;
+      box-sizing: border-box;
+    }
+
+    .sidebar .logo {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .sidebar img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 30px;
+      border-radius: 10px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar ul li {
+      margin: 10px 0;
+    }
+
+    .sidebar ul li a {
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+      display: block;
+      padding: 12px 20px;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+
+    .sidebar ul li a:hover {
+      background: #374151;;
+      color: white;
+    }
+    main {
+      margin-left: 250px;
+      padding: 20px;
+      width: calc(100% - 250px);
+      box-sizing: border-box;
+    }
+
+    .appointments-section {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .appointments-section h2 {
+      margin: 0 0 20px;
+      color: #001f54;
+    }
+
+    .appointments-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .appointment-item {
+      background: #f4f6f9;
+      padding: 15px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .appointment-item p {
+      margin: 0;
+      color: #555;
+    }
+
+    .appointment-item .details {
+      font-size: 14px;
+      color: #777;
+    }
+
+    
+  </style>
+  <script>
+    // Example appointment data
+    const appointments = [
+      { id: 'A001', doctor: 'Dr. Rohit', date: '2025-01-15T10:30:00', status: 'upcoming' },
+      { id: 'A002', doctor: 'Dr. Jane', date: '2025-01-17T13:00:00', status: 'upcoming' },
+      { id: 'A004', doctor: 'Dr. Kohli', date: '2025-02-10T09:00:00', status: 'upcoming' },
+      { id: 'A005', doctor: 'Dr. Patel', date: '2025-02-15T11:30:00', status: 'upcoming' },
+      { id: 'A003', doctor: 'Dr. Smith', date: '2025-01-05T15:15:00', status: 'completed' },
+      { id: 'A006', doctor: 'Dr. Wilson', date: '2025-01-10T14:00:00', status: 'completed' },
+      { id: 'A010', doctor: 'Dr. Thomas', date: '2025-01-12T10:00:00', status: 'completed' }
+    ];
+
+    function updateAppointments() {
+      const currentDate = new Date();
+      const upcomingList = document.getElementById('upcoming-list');
+      const completedList = document.getElementById('completed-list');
+
+      upcomingList.innerHTML = '';
+      completedList.innerHTML = '';
+
+      appointments.forEach((appointment) => {
+        const appointmentDate = new Date(appointment.date);
+        const listItem = document.createElement('div');
+        listItem.className = 'appointment-item';
+
+        listItem.innerHTML = `
+          <div>
+            <p><strong>${appointment.doctor}</strong></p>
+            <p class="details">${appointmentDate.toDateString()} at ${appointmentDate.toLocaleTimeString()}</p>
+          </div>
+        
+        `;
+
+        if (appointmentDate >= currentDate) {
+          appointment.status = 'upcoming';
+          upcomingList.appendChild(listItem);
+        } else {
+          appointment.status = 'completed';
+          completedList.appendChild(listItem);
+        }
+      });
+    }
+
+    function viewAppointment(id) {
+      alert(`Viewing details for appointment${id}`);
+    }
+
+    document.addEventListener('DOMContentLoaded', updateAppointments);
+
+
+
+    
+    function updateAppointments() {
+        const currentDate = new Date();
+        const upcomingList = document.getElementById("upcoming-list");
+        const completedList = document.getElementById("completed-list");
+
+        upcomingList.innerHTML = '';
+        completedList.innerHTML = '';
+
+        // Retrieve appointments from localStorage
+        const appointments = JSON.parse(localStorage.getItem("appointments")) || [];
+
+        appointments.forEach((appointment) => {
+            const [day, month] = appointment.date.split("-");
+            const appointmentDate = new Date(`${month} ${day}, ${currentDate.getFullYear()} ${appointment.time}`);
+            const listItem = document.createElement("div");
+            listItem.className = 'appointment-item';
+
+            listItem.innerHTML = `
+                <div>
+                    <p><strong>${appointment.doctor}</strong></p>
+                    <p class="details">${appointment.date} at ${appointment.time}</p>
+                </div>
+            `;
+
+            // Separate into upcoming and completed
+            if (appointmentDate >= currentDate) {
+                upcomingList.appendChild(listItem);
+            } else {
+                completedList.appendChild(listItem);
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', updateAppointments);
+    
+  </script>
+</head>
+
+<body>
+  <div class="sidebar">
+    <div class="logo">CareSync</div>
+            <img src="https://cdn.dribbble.com/userupload/16410591/file/original-c51d0c42ed6debc77969e5d0bb9ae570.png?resize=1600x1200">
+    <ul>
+      <li><a href="pt dashboard.html">Dashboard</a></li>
+      <li><a href="pt appointment.html" class="active">Appointments</a></li>
+      <li><a href="pt records.html">Records</a></li>
+      <li><a href="pt settings.html">Profile</a></li>
+    </ul>
+  </div>
+
+  <main>
+    <div class="appointments-section">
+      <h2>Upcoming Appointments</h2>
+      <div class="appointments-list" id="upcoming-list">
+        <!-- Upcoming appointments will be rendered here -->
+      </div>
+    </div>
+
+    <div class="appointments-section">
+      <h2>Past Appointments</h2>
+      <div class="appointments-list" id="completed-list">
+        <!-- Completed appointments will be rendered here -->
+      </div>
+    </div>
+  </main>
+</body>
+</html>
